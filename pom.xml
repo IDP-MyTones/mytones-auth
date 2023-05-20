@@ -110,6 +110,7 @@
     </dependencies>
 
     <build>
+        <finalName>mytones-auth</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -121,6 +122,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+
                 </configuration>
             </plugin>
         </plugins>
