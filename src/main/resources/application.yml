@@ -3,17 +3,11 @@ spring:
     multipart:
       max-file-size: 118MB
       max-request-size: 118MB
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings.trace: false
-      settings.web-allow-others: false
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
-    username: sa
-    password:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_URL}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     hikari:
       auto-commit: false
       minimum-idle: 50
@@ -23,8 +17,9 @@ spring:
       connection-timeout: 300000
   jpa:
     open-in-view: false
-    database: H2
-    database_platform: org.hibernate.dialect.H2Dialect
+    database: postgresql
+    database_platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: update
     properties:
       hibernate.format_sql: false           # optional - enable SQL statements formatting.
       hibernate.generate_statistics: false  # optional - generate statistics to check if L2/query cache is actually being used.
@@ -50,15 +45,8 @@ spring:
       hibernate.query.plan_parameter_metadata_max_size: 256
       hibernate.jdbc.batch_versioned_data: true
       hibernate.bytecode.use_reflection_optimizer: true
-  #      hibernate:
-  #        show_sql: true
   liquibase:
     enabled: false
-#logging:
-#  level:
-#    org:
-#      hibernate:
-#        SQL: INFO
 server:
   port: 8081
 
