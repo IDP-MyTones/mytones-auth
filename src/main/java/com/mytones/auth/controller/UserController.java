@@ -8,7 +8,6 @@ import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
@@ -22,7 +21,6 @@ public class UserController {
     private final PasswordEncoder encoder;
 
     @PostMapping
-    @Transactional
     public void signUp(@RequestBody final UserDto dto) {
         final var user = new User();
         user.setPassword(encoder.encode(dto.getPassword()));
@@ -35,7 +33,6 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @Transactional
     @Secured({"ADMIN", "CLIENT", "MODERATOR"})
     public UserDto me() throws LoginException {
         final var username = SecurityUtils.getCurrentUserLogin().orElseThrow(LoginException::new);
